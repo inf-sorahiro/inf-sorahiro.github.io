@@ -1,0 +1,37 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import PostList from '../PostList.astro';
+import { resolveCover } from '../../utils/imageStore';
+import { getWeeklyPosts, type Locale } from '../../utils/i18n-content';
+import { useTranslations, type Locale as I18nLocale } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale as I18nLocale);
+
+const allWeekly = await getWeeklyPosts(locale);
+const sorted = allWeekly.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const weeklyData = sorted.map((p) => ({
+  ...p,
+  slug: p.id.split('/')[0],
+  data: {
+    ...p.data,
+    category: t('weekly.title'),
+    cover: resolveCover('weekly', p.id, p.data.cover),
+  },
+}));
+
+const routePrefix = `/${locale}/weekly/`;
+---
+
+<BlogLayout title={t('weekly.title')}>
+  <h1 class="text-2xl font-bold mb-8 flex items-center gap-2">
+    <span class="w-1 h-6 bg-primary rounded-full inline-block"></span>
+    {t('weekly.title')}
+  </h1>
+  <PostList posts={weeklyData as any} routePrefix={routePrefix} />
+</BlogLayout>

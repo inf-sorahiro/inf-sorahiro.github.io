@@ -1,0 +1,10 @@
+---
+import WeeklyPostPage from '../../../components/pages/WeeklyPostPage.astro';
+
+export async function getStaticPaths() {
+  const { getWeeklyStaticPaths } = await import('../../../utils/i18n-content');
+  return getWeeklyStaticPaths('en');
+}
+---
+
+<WeeklyPostPage locale={Astro.currentLocale} />

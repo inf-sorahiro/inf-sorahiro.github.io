@@ -1,0 +1,14 @@
+---
+import PageListPage from '../../../components/pages/PageListPage.astro';
+
+export async function getStaticPaths() {
+  const { getPageStaticPaths } = await import('../../../utils/i18n-content');
+  const pages = await getPageStaticPaths('zh', 10);
+  return pages;
+}
+
+const { page: pageParam } = Astro.params;
+const currentPage = Number(pageParam);
+---
+
+<PageListPage locale={Astro.currentLocale} currentPage={currentPage} />

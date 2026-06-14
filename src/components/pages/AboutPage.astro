@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_AUTHOR } from '../../consts';
+import { useTranslations, type Locale } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<BaseLayout title={t('about.title')}>
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8">
+    <article class="prose max-w-none">
+      <h1>{t('about.title')}</h1>
+      <p>
+        {locale === 'zh' ? `你好，我是 ${SITE_AUTHOR}。这里是基于 Astro 构建的现代化博客。` : `Hello, I'm ${SITE_AUTHOR}. This is a modern blog built with Astro.`}
+      </p>
+      <p>
+        {locale === 'zh' ? '这里会记录我的学习笔记、技术分享和生活随笔。希望你能在这里找到有用的内容。' : 'Here I record my learning notes, tech shares, and life essays. Hope you find something useful here.'}
+      </p>
+      <h2>{t('about.siteTitle')}</h2>
+      <ul>
+        <li>Framework: <a href="https://astro.build">Astro</a></li>
+        <li>Style: Tailwind CSS</li>
+        <li>Deploy: Static Site</li>
+      </ul>
+      <h2>{t('about.contact')}</h2>
+      <p>{locale === 'zh' ? '如有任何问题或建议，欢迎通过以下方式联系：' : 'If you have any questions or suggestions, feel free to contact me:'}</p>
+      <ul>
+        <li><a href="https://github.com/santisify">GitHub</a></li>
+      </ul>
+    </article>
+  </div>
+</BaseLayout>
