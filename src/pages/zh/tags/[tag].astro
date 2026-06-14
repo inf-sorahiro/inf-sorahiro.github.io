@@ -1,0 +1,12 @@
+---
+import TagPage from '../../../components/pages/TagPage.astro';
+
+export async function getStaticPaths() {
+  const { getTagStaticPaths } = await import('../../../utils/i18n-content');
+  return getTagStaticPaths('zh');
+}
+
+const { tag } = Astro.params;
+---
+
+<TagPage locale={Astro.currentLocale} tag={tag!} />

@@ -1,0 +1,68 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import { getBlogPosts, type Locale } from '../../utils/i18n-content';
+import { useTranslations, getLocalePath, type Locale as I18nLocale } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale as I18nLocale);
+
+const allPosts = await getBlogPosts(locale);
+
+const categoryMap = new Map<string, { count: number; latestPost: any }>();
+
+for (const post of allPosts) {
+  const cat = post.data.category;
+  if (!cat) continue;
+  if (cat.includes('/')) {
+    const parts = cat.split('/');
+    for (let i = 0; i < parts.length; i++) {
+      const subCat = parts.slice(0, i + 1).join('/');
+      if (!categoryMap.has(subCat)) {
+        categoryMap.set(subCat, { count: 0, latestPost: post });
+      }
+      const entry = categoryMap.get(subCat)!;
+      entry.count++;
+    }
+  } else {
+    if (!categoryMap.has(cat)) {
+      categoryMap.set(cat, { count: 0, latestPost: post });
+    }
+    const entry = categoryMap.get(cat)!;
+    entry.count++;
+  }
+}
+
+const categories = Array.from(categoryMap.entries())
+  .map(([name, info]) => ({
+    name,
+    displayName: name.split('/').pop()!,
+    count: info.count,
+  }))
+  .sort((a, b) => b.count - a.count);
+---
+
+<BlogLayout title={t('categories.title')}>
+  <h1 class="text-2xl font-bold mb-8 flex items-center gap-2">
+    <span class="w-1 h-6 bg-primary rounded-full inline-block"></span>
+    {t('categories.title')}
+  </h1>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {categories.map((cat) => (
+      <a
+        href={`${getLocalePath('/categories', locale)}/${cat.name}`}
+        class="card-hover bg-white dark:bg-[var(--color-card-dark)] rounded-xl shadow-sm p-5 group"
+      >
+        <h2 class="font-semibold group-hover:text-primary transition-colors">
+          {cat.displayName}
+        </h2>
+        <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">
+          {cat.count} {t('categories.count')}
+        </p>
+      </a>
+    ))}
+  </div>
+</BlogLayout>

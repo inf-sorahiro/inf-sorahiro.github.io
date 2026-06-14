@@ -1,0 +1,10 @@
+---
+import CategoriesPage from '../../../components/pages/CategoriesPage.astro';
+
+export async function getStaticPaths() {
+  const { getCategoryStaticPaths } = await import('../../../utils/i18n-content');
+  return getCategoryStaticPaths('en');
+}
+---
+
+<CategoriesPage locale={Astro.currentLocale} />

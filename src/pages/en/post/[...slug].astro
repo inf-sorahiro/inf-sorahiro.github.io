@@ -1,0 +1,10 @@
+---
+import BlogPostPage from '../../../components/pages/BlogPostPage.astro';
+
+export async function getStaticPaths() {
+  const { getBlogStaticPaths } = await import('../../../utils/i18n-content');
+  return getBlogStaticPaths('en');
+}
+---
+
+<BlogPostPage locale={Astro.currentLocale} />

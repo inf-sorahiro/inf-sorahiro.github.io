@@ -1,0 +1,102 @@
+---
+title: MDX & Math Formulas
+description: Demonstrates MDX component embedding, KaTeX math formula rendering, and external link cards.
+date: 2024-05-15
+tags: [MDX, Tutorial]
+category: Notes
+cover: https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200
+lang: en
+---
+
+## What is MDX
+
+MDX lets you use JSX components directly in Markdown.
+
+### Link Cards
+
+import LinkCard from '../../../components/LinkCard.astro';
+
+<LinkCard
+  url="https://astro.build"
+  title="Astro Documentation"
+  description="Astro is the all-in-one web framework designed for content-driven websites, supporting multiple UI frameworks and Islands architecture."
+  site="astro.build"
+/>
+
+<LinkCard
+  url="https://katex.org"
+  title="KaTeX — The fastest math typesetting library"
+  description="Fast, easy-to-use math typesetting library for the web, with full LaTeX syntax support."
+/>
+
+## Math Formulas
+
+This theme uses **KaTeX** for math rendering, supporting both inline and block-level formulas.
+
+### Inline Formulas
+
+Mass-energy equivalence: $E = mc^2$
+
+Quadratic formula: $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$
+
+### Block Formulas
+
+Gaussian integral:
+
+$$
+\int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
+$$
+
+Euler's identity:
+
+$$
+e^{i\pi} + 1 = 0
+$$
+
+### Multi-line Alignment
+
+$$
+\begin{aligned}
+\nabla \times \vec{E} &= -\frac{\partial \vec{B}}{\partial t} \\
+\nabla \times \vec{B} &= \mu_0 \vec{J} + \mu_0 \epsilon_0 \frac{\partial \vec{E}}{\partial t}
+\end{aligned}
+$$
+
+### Matrices
+
+$$
+A = \begin{pmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33}
+\end{pmatrix}
+$$
+
+### Combinatorics & Probability
+
+Binomial coefficient: $\binom{n}{k} = \frac{n!}{k!(n-k)!}$
+
+Bayes' theorem:
+
+$$
+P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}
+$$
+
+### Summations & Products
+
+$$
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+$$
+
+$$
+\prod_{i=1}^{n} x_i = x_1 \cdot x_2 \cdot \ldots \cdot x_n
+$$
+
+## Custom Components
+
+Beyond LinkCard, you can create any custom component and use it in MDX:
+
+1. Create `.astro` components under `src/components/`
+2. `import` and use them in MDX files
+
+This approach gives your content unlimited extensibility.
