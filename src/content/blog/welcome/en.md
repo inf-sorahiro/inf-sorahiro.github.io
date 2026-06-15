@@ -1,12 +1,13 @@
 ---
 title: Welcome to Sify Blog
 description: Sify Blog is a modern blog theme built with Astro, supporting Markdown/MDX, math formulas, syntax highlighting, search, comments, and more.
-date: 2024-06-01
+date: 2026-06-14
 tags: [Astro, Tutorial]
 category: Notes
 pinned: true
 cover: https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200
 lang: en
+draft: false
 ---
 
 ## Quick Start

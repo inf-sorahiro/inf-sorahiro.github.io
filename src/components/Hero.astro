@@ -3,11 +3,14 @@ import { getCollection } from 'astro:content';
 import { SITE_TITLE, SITE_AUTHOR, SITE_AVATAR, SITE_COVER, SOCIAL_LINKS } from '../consts';
 import { getWordCount, getReadingTime } from '../utils/readingTime';
 import { useTranslations, getLocalePath, type Locale } from '../i18n/utils';
+import { hideDraft } from '../utils/i18n-content';
 
 const locale = Astro.currentLocale as Locale;
 const t = useTranslations(locale);
 
-const allBlogPosts = await getCollection('blog', ({ data }) => data.lang === locale);
+const HIDE_DRAFT = hideDraft();
+const rawBlogPosts = await getCollection('blog', ({ data }) => data.lang === locale);
+const allBlogPosts = HIDE_DRAFT ? rawBlogPosts.filter((p) => !p.data.draft) : rawBlogPosts;
 const sorted = allBlogPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 let totalWords = 0;

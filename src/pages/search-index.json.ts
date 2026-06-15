@@ -1,5 +1,7 @@
 import { getCollection } from 'astro:content';
 
+const HIDE_DRAFT = !import.meta.env.DEV;
+
 function stripMarkdown(raw: string): string {
   return raw
     .replace(/```[\s\S]*?```/g, ' ')
@@ -18,8 +20,8 @@ function stripMarkdown(raw: string): string {
 }
 
 export async function GET() {
-  const blogPosts = await getCollection('blog');
-  const weeklyPosts = await getCollection('weekly');
+  const blogPosts = await getCollection('blog', ({ data }) => !HIDE_DRAFT || !data.draft);
+  const weeklyPosts = await getCollection('weekly', ({ data }) => !HIDE_DRAFT || !data.draft);
 
   const entries = [
     ...blogPosts.map((p) => ({
@@ -31,7 +33,7 @@ export async function GET() {
       type: 'blog',
       date: p.data.date.toISOString(),
       body: stripMarkdown(p.body || '').slice(0, 400),
-      locale: p.data.lang || 'zh',
+      locale: p.data.lang || 'zh-tw',
     })),
     ...weeklyPosts.map((p) => ({
       title: p.data.title,
@@ -42,7 +44,7 @@ export async function GET() {
       type: 'weekly',
       date: p.data.date.toISOString(),
       body: stripMarkdown(p.body || '').slice(0, 400),
-      locale: p.data.lang || 'zh',
+      locale: p.data.lang || 'zh-tw',
     })),
   ];
 

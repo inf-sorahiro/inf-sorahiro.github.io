@@ -13,7 +13,7 @@ const blogCollection = defineCollection({
     cover: z.string().optional(),
     pinned: z.boolean().default(false),
     draft: z.boolean().default(false),
-    lang: z.string().default('zh'),
+    lang: z.string().default('zh-tw'),
   }),
 });
 
@@ -27,7 +27,7 @@ const weeklyCollection = defineCollection({
     cover: z.string().optional(),
     issue: z.number(),
     draft: z.boolean().default(false),
-    lang: z.string().default('zh'),
+    lang: z.string().default('zh-tw'),
   }),
 });
 

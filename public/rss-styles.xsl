@@ -130,7 +130,7 @@
               </div>
             </xsl:if>
             <div class="link-row">
-              <a href="{link}">阅读全文 →</a>
+              <a href="{link}">閱讀全文 →</a>
             </div>
           </div>
         </xsl:for-each>
@@ -144,7 +144,7 @@
             </a>
           </p>
           <p style="margin-top:6px">
-            通过 <a href="https://aboutfeeds.com" target="_blank" rel="noopener">RSS 阅读器</a> 订阅本博客
+            通过 <a href="https://aboutfeeds.com" target="_blank" rel="noopener">RSS 閱讀器</a> 訂閱本部落格
           </p>
         </div>
       </body>

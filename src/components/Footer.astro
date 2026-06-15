@@ -4,12 +4,15 @@ import {SITE_TITLE} from '../consts';
 import {getWordCount} from '../utils/readingTime';
 import {SITE_AUTHOR} from "../consts.ts";
 import { useTranslations, getNavItems, type Locale } from '../i18n/utils';
+import { hideDraft } from '../utils/i18n-content';
 
 const locale = Astro.currentLocale as Locale;
 const t = useTranslations(locale);
 const navItems = getNavItems(locale);
+const HIDE_DRAFT = hideDraft();
 
-const allBlogPosts = await getCollection('blog', ({ data }) => data.lang === locale);
+const rawBlogPosts = await getCollection('blog', ({ data }) => data.lang === locale);
+const allBlogPosts = HIDE_DRAFT ? rawBlogPosts.filter((p) => !p.data.draft) : rawBlogPosts;
 const totalArticles = allBlogPosts.length;
 
 let totalWords = 0;

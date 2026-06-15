@@ -1,30 +1,43 @@
 import { getCollection } from 'astro:content';
 import type { Locale } from '../i18n/utils';
 
+const HIDE_DRAFT = !import.meta.env.DEV;
+
+export function hideDraft() {
+  return HIDE_DRAFT;
+}
+
+function filterPosts(posts: any[]) {
+  if (!HIDE_DRAFT) return posts;
+  return posts.filter((p) => !p.data.draft);
+}
+
 export async function getBlogPosts(locale: Locale) {
-  return getCollection('blog', ({ data }) => data.lang === locale);
+  const posts = await getCollection('blog', ({ data }) => data.lang === locale);
+  return filterPosts(posts);
 }
 
 export async function getWeeklyPosts(locale: Locale) {
-  return getCollection('weekly', ({ data }) => data.lang === locale);
+  const posts = await getCollection('weekly', ({ data }) => data.lang === locale);
+  return filterPosts(posts);
 }
 
 export async function getBlogStaticPaths(locale: Locale) {
-  const posts = await getCollection('blog', ({ data }) => data.lang === locale);
+  const posts = filterPosts(await getCollection('blog', ({ data }) => data.lang === locale));
   return posts.map((post) => ({
     params: { slug: post.id.split('/')[0] },
   }));
 }
 
 export async function getWeeklyStaticPaths(locale: Locale) {
-  const posts = await getCollection('weekly', ({ data }) => data.lang === locale);
+  const posts = filterPosts(await getCollection('weekly', ({ data }) => data.lang === locale));
   return posts.map((post) => ({
     params: { slug: post.id.split('/')[0] },
   }));
 }
 
 export async function getCategoryStaticPaths(locale: Locale) {
-  const posts = await getCollection('blog', ({ data }) => data.lang === locale);
+  const posts = filterPosts(await getCollection('blog', ({ data }) => data.lang === locale));
   const categories = new Set<string>();
   for (const post of posts) {
     const cat = post.data.category;
@@ -41,7 +54,7 @@ export async function getCategoryStaticPaths(locale: Locale) {
 }
 
 export async function getTagStaticPaths(locale: Locale) {
-  const posts = await getCollection('blog', ({ data }) => data.lang === locale);
+  const posts = filterPosts(await getCollection('blog', ({ data }) => data.lang === locale));
   const tags = new Set<string>();
   for (const post of posts) {
     for (const tag of post.data.tags || []) {
@@ -52,7 +65,7 @@ export async function getTagStaticPaths(locale: Locale) {
 }
 
 export async function getPageStaticPaths(locale: Locale, pageSize: number) {
-  const posts = await getCollection('blog', ({ data }) => data.lang === locale);
+  const posts = filterPosts(await getCollection('blog', ({ data }) => data.lang === locale));
   const totalPages = Math.ceil(posts.length / pageSize);
   const pages = Array.from({ length: totalPages - 1 }, (_, i) => i + 2);
   return pages.map((page) => ({

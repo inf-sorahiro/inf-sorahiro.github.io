@@ -9,7 +9,7 @@ interface Props {
 const { class: className } = Astro.props;
 const locale = Astro.currentLocale as Locale;
 const t = useTranslations(locale);
-const walineLang = locale === 'zh' ? 'zh-CN' : 'en';
+const walineLang = locale === 'zh-tw' ? 'zh-TW' : 'en';
 
 ---
 

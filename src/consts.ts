@@ -23,3 +23,6 @@ export const SOCIAL_LINKS = [
 
 export const npmCDN = '';
 export const walineServer = '';
+
+/** 站点创建日期，用于计算运行时长 */
+export const SITE_START_DATE = '2026-06-14';

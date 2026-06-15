@@ -1,14 +1,17 @@
 ---
 import { getCollection } from 'astro:content';
-import { SITE_AUTHOR, SITE_AVATAR, SOCIAL_LINKS } from '../consts';
+import { SITE_AUTHOR, SITE_AVATAR, SOCIAL_LINKS, SITE_START_DATE } from '../consts';
 import { getWordCount } from '../utils/readingTime';
 import { useTranslations, getLocalePath, type Locale } from '../i18n/utils';
+import { hideDraft } from '../utils/i18n-content';
 import Calendar from './Calendar.astro';
 
 const locale = Astro.currentLocale as Locale;
 const t = useTranslations(locale);
+const HIDE_DRAFT = hideDraft();
 
-const allPosts = await getCollection('blog', ({ data }) => data.lang === locale);
+const rawPosts = await getCollection('blog', ({ data }) => data.lang === locale);
+const allPosts = HIDE_DRAFT ? rawPosts.filter((p) => !p.data.draft) : rawPosts;
 const sorted = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const totalPosts = sorted.length;
@@ -69,9 +72,12 @@ const latestYearMonth = sortedYearMonths[sortedYearMonths.length - 1] || '';
 
 // --- Stats: uptime & last updated ---
 const now = new Date();
-const siteCreated = sorted.length > 0 ? sorted[sorted.length - 1].data.date : now;
-const uptimeDays = Math.floor((now.getTime() - siteCreated.getTime()) / (1000 * 60 * 60 * 24));
-const lastUpdated = sorted.length > 0 ? sorted[0].data.date : now;
+const siteStartDate = new Date(SITE_START_DATE);
+const uptimeDays = Math.floor((now.getTime() - siteStartDate.getTime()) / (1000 * 60 * 60 * 24));
+const allSitePosts = await getCollection('blog');
+const filteredForStats = HIDE_DRAFT ? allSitePosts.filter((p) => !p.data.draft) : allSitePosts;
+const sortedForStats = filteredForStats.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const lastUpdated = sortedForStats.length > 0 ? sortedForStats[0].data.date : now;
 const lastUpdatedFormatted = `${lastUpdated.getFullYear()}-${String(lastUpdated.getMonth() + 1).padStart(2, '0')}-${String(lastUpdated.getDate()).padStart(2, '0')}`;
 ---
 

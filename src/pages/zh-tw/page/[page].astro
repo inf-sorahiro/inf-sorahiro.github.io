@@ -3,7 +3,7 @@ import PageListPage from '../../../components/pages/PageListPage.astro';
 
 export async function getStaticPaths() {
   const { getPageStaticPaths } = await import('../../../utils/i18n-content');
-  const pages = await getPageStaticPaths('zh', 10);
+  const pages = await getPageStaticPaths('zh-tw', 10);
   return pages;
 }
 

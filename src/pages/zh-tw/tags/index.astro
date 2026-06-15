@@ -3,7 +3,7 @@ import TagsPage from '../../../components/pages/TagsPage.astro';
 
 export async function getStaticPaths() {
   const { getTagStaticPaths } = await import('../../../utils/i18n-content');
-  return getTagStaticPaths('zh');
+  return getTagStaticPaths('zh-tw');
 }
 ---
 

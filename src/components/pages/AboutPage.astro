@@ -16,10 +16,10 @@ const t = useTranslations(locale);
     <article class="prose max-w-none">
       <h1>{t('about.title')}</h1>
       <p>
-        {locale === 'zh' ? `你好，我是 ${SITE_AUTHOR}。这里是基于 Astro 构建的现代化博客。` : `Hello, I'm ${SITE_AUTHOR}. This is a modern blog built with Astro.`}
+        {locale === 'zh-tw' ? `你好，我是 ${SITE_AUTHOR}。這裡是基於 Astro 構建的現代化部落格。` : `Hello, I'm ${SITE_AUTHOR}. This is a modern blog built with Astro.`}
       </p>
       <p>
-        {locale === 'zh' ? '这里会记录我的学习笔记、技术分享和生活随笔。希望你能在这里找到有用的内容。' : 'Here I record my learning notes, tech shares, and life essays. Hope you find something useful here.'}
+        {locale === 'zh-tw' ? '這裡會記錄我的學習筆記、技術分享和生活隨筆。希望你能在這裡找到有用的內容。' : 'Here I record my learning notes, tech shares, and life essays. Hope you find something useful here.'}
       </p>
       <h2>{t('about.siteTitle')}</h2>
       <ul>
@@ -28,9 +28,9 @@ const t = useTranslations(locale);
         <li>Deploy: Static Site</li>
       </ul>
       <h2>{t('about.contact')}</h2>
-      <p>{locale === 'zh' ? '如有任何问题或建议，欢迎通过以下方式联系：' : 'If you have any questions or suggestions, feel free to contact me:'}</p>
+      <p>{locale === 'zh-tw' ? '如有任何問題或建議，歡迎透過以下方式聯繫：' : 'If you have any questions or suggestions, feel free to contact me:'}</p>
       <ul>
-        <li><a href="https://github.com/santisify">GitHub</a></li>
+        <li><a href="https://github.com/inf-sorahiro">GitHub</a></li>
       </ul>
     </article>
   </div>

@@ -1,0 +1,103 @@
+---
+title: MDX 與數學公式
+description: 演示 MDX 組件嵌入、KaTeX 數學公式渲染和外鏈卡片功能。
+date: 2024-05-15
+tags: [MDX, 教程]
+category: 筆記
+cover: https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200
+lang: zh-tw
+draft: true
+---
+
+## MDX 是什麼
+
+MDX 讓你在 Markdown 中直接使用 JSX 組件。
+
+### 外鏈卡片
+
+import LinkCard from '../../../components/LinkCard.astro';
+
+<LinkCard
+  url="https://astro.build"
+  title="Astro 官方文檔"
+  description="Astro 是適合內容型網站的全能 web 框架，支持多種 UI 框架和 Islands 架構。"
+  site="astro.build"
+/>
+
+<LinkCard
+  url="https://katex.org"
+  title="KaTeX — 最快的數學排版庫"
+  description="為 Web 設計的快速、易用數學排版庫，完整支持 LaTeX 語法。"
+/>
+
+## 數學公式
+
+本主題使用 **KaTeX** 渲染數學公式，支持行內和塊級公式。
+
+### 行內公式
+
+質能方程：$E = mc^2$
+
+二次公式：$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$
+
+### 塊級公式
+
+高斯積分：
+
+$$
+\int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
+$$
+
+歐拉公式：
+
+$$
+e^{i\pi} + 1 = 0
+$$
+
+### 多行對齊
+
+$$
+\begin{aligned}
+\nabla \times \vec{E} &= -\frac{\partial \vec{B}}{\partial t} \\
+\nabla \times \vec{B} &= \mu_0 \vec{J} + \mu_0 \epsilon_0 \frac{\partial \vec{E}}{\partial t}
+\end{aligned}
+$$
+
+### 矩陣
+
+$$
+A = \begin{pmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33}
+\end{pmatrix}
+$$
+
+### 組合數與概率
+
+二項式係數：$\binom{n}{k} = \frac{n!}{k!(n-k)!}$
+
+貝葉斯定理：
+
+$$
+P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}
+$$
+
+### 求和與求積
+
+$$
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+$$
+
+$$
+\prod_{i=1}^{n} x_i = x_1 \cdot x_2 \cdot \ldots \cdot x_n
+$$
+
+## 自定義組件
+
+除 LinkCard 外，你還可以創建任意自定義組件並在 MDX 中使用：
+
+1. 在 `src/components/` 下創建 `.astro` 組件
+2. 在 MDX 文件中 `import` 並使用
+
+這種方式讓文章內容具備無限擴展能力。
